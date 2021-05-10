@@ -3,6 +3,51 @@ class Card:
     def __init__(self, message):
         self.message = message
 
+
+    def auto_scaling(self):
+        return {
+            "@type": "MessageCard",
+            "@context": "http://schema.org/extensions",
+            "themeColor": "0076D7",
+            "summary": self.message['Service'],
+            "sections": [{
+                "activityTitle": self.message['Service'] + ' - ' + self.message['Description'],
+                "activitySubtitle": self.message['Cause'],
+                "activityImage": "https://sinovi.uk/images/articles/cw.png",
+                "facts": [
+                    {
+                        "name": "Time:",
+                        "value": self.message['Time']
+                    },
+                    {
+                        "name": "AccountId:",
+                        "value": self.message['AccountId']
+                    },
+                    {
+                        "name": "Event:",
+                        "value": self.message['Event']
+                    },
+                    {
+                        "name": "StatusCode",
+                        "value": self.message['StatusCode']
+                    },
+                    {
+                        "name": "Subnet ID",
+                        "value": self.message['Details']['Subnet ID']
+                    },
+                    {
+                        "name": "Availability Zone",
+                        "value": self.message['Details']['Availability Zone']
+                    },
+                    {
+                        "name": "AutoScalingGroupName",
+                        "value": self.message['AutoScalingGroupName']
+                    }
+                ],
+                "markdown": True
+            }]
+        }
+
     def alarm(self):
         return {
             "@type": "MessageCard",
@@ -27,10 +72,6 @@ class Card:
                         "value": self.message['Region']
                     },
                     {
-                        "name": "NewStateValue",
-                        "value": self.message['NewStateValue']
-                    },
-                    {
                         "name": "AlarmArn",
                         "value": self.message['AlarmArn']
                     },
@@ -45,18 +86,6 @@ class Card:
                     {
                         "name": "Namespace",
                         "value": self.message['Trigger']['Namespace']
-                    },
-                    {
-                        "name": "StatisticType",
-                        "value": self.message['Trigger']['StatisticType']
-                    },
-                    {
-                        "name": "Statistic",
-                        "value": self.message['Trigger']['Statistic']
-                    },
-                    {
-                        "name": "Unit",
-                        "value": self.message['Trigger']['Unit']
                     },
                     {
                         "name": "Period",
