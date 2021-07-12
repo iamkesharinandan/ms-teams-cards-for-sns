@@ -1,0 +1,24 @@
+{
+  "Origin": "AutoScalingGroup",
+  "Destination": "EC2",
+  "Progress": 50,
+  "AccountId": "464661424927",
+  "Description": "Terminating EC2 instance: i-028f5446a7d7ce371",
+  "RequestId": "1085ea6c-592d-d97a-e2dc-affb69a084cc",
+  "EndTime": "2021-07-12T14:19:29.053Z",
+  "AutoScalingGroupARN": "arn:aws:autoscaling:eu-west-1:464661424927:autoScalingGroup:13ce8ccd-d004-4181-bd9d-c0914d9cc145:autoScalingGroupName/EC2ContainerService-euwe1-tit-wscl001-Web-EcsSpotInstanceAsg",
+  "ActivityId": "1085ea6c-592d-d97a-e2dc-affb69a084cc",
+  "StartTime": "2021-07-12T14:19:27.478Z",
+  "Service": "AWS Auto Scaling",
+  "Time": "2021-07-12T14:19:29.053Z",
+  "EC2InstanceId": "i-028f5446a7d7ce371",
+  "StatusCode": "InProgress",
+  "StatusMessage": "",
+  "Details": {
+    "Subnet ID": "subnet-0e82a36eb7d6bacfc",
+    "Availability Zone": "eu-west-1a"
+  },
+  "AutoScalingGroupName": "EC2ContainerService-euwe1-tit-wscl001-Web-EcsSpotInstanceAsg",
+  "Cause": "At 2021-07-12T14:19:27Z an instance was taken out of service in response to an EC2 health check indicating it has been terminated or stopped.",
+  "Event": "autoscaling:EC2_INSTANCE_TERMINATE"
+}

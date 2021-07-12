@@ -2,7 +2,6 @@
 import json
 import logging
 import os
-import cards.autoscaling_ec2 as ec2
 
 from urllib.request import Request, urlopen
 from urllib.error import URLError, HTTPError
@@ -12,13 +11,57 @@ HOOK_URL = "https://taxbackinternational.webhook.office.com/webhookb2/33b61d5a-b
            "-a79230429d1c "
 
 
+def ec2_asg(message):
+    return ec2(message['detail'])
+
+
+def ec2(message):
+    details = message['Details']
+    theme_color = '808080'
+    if 'Event' in message:
+        theme_color = '00ff00' if message['Event'] == 'autoscaling:EC2_INSTANCE_LAUNCH' else 'ff0000'
+    return {
+        "@type": "MessageCard",
+        "@context": "http://schema.org/extensions",
+        "themeColor": theme_color,
+        "summary": message['Destination'] + ' - ' + message['Description'],
+        "sections": [{
+            "activityTitle": message['Destination'] + ' - ' + message['Description'],
+            "activitySubtitle": message['Cause'],
+            "activityImage": "https://sinovi.uk/images/articles/cw.png",
+            "facts": [
+                {
+                    "name": "AutoScalingGroupName:",
+                    "value": message['AutoScalingGroupName']
+                },
+                {
+                    "name": "Availability Zone",
+                    "value": details['Availability Zone']
+                },
+                {
+                    "name": "Subnet ID",
+                    "value": details['Subnet ID']
+                },
+                {
+                    "name": "StartTime",
+                    "value": message['StartTime']
+                },
+                {
+                    "name": "Status",
+                    "value": message['StatusCode']
+                }
+            ],
+            "markdown": True
+        }]
+    }
+
+
+
 def lambda_handler(event, context):
     # message = json.loads(event['Records'][0]['Sns']['Message'])
-    f = open('launch_ec2.json', "r")
+    f = open('terminate_ec2.json', "r")
     message = json.loads(f.read())
     f.close()
-    original_message = message
-    print(original_message)
 
     if 'AlarmName' in message:
         alarm_name = message['AlarmName']
@@ -26,9 +69,11 @@ def lambda_handler(event, context):
         new_state = message['NewStateValue']
         reason = message['NewStateReason']
     elif 'source' in message and message['source'] == 'aws.autoscaling':
-        message = ec2.launch_new_ec2_asg(original_message)
+        message = ec2_asg(message)
     elif 'Destination' in message and message['Destination'] == 'AutoScalingGroup':
-        message = ec2.launch_new_ec2(original_message)
+        message = ec2(message)
+    elif 'Destination' in message and message['Destination'] == 'EC2':
+        message = ec2(message)
     else:
         alarm_name = 'Unknown'
         old_state = 'Unknown'
