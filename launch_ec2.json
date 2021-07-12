@@ -1,31 +1,24 @@
 {
-  "version": "0",
-  "id": "819c1694-04ff-705e-1117-db389e9c644d",
-  "detail-type": "EC2 Instance Launch Successful",
-  "source": "aws.autoscaling",
-  "account": "464661424927",
-  "time": "2021-07-12T12:36:55Z",
-  "region": "eu-west-1",
-  "resources": [
-    "arn:aws:autoscaling:eu-west-1:464661424927:autoScalingGroup:9e6c9493-1621-434a-ba65-12ff4a1722be:autoScalingGroupName/EC2ContainerService-euwe1-tit-wscl001-Worker-EcsSpotInstanceAsg",
-    "arn:aws:ec2:eu-west-1:464661424927:instance/i-0deade977592562fe"
-  ],
-  "detail": {
-    "Origin": "EC2",
-    "Destination": "AutoScalingGroup",
-    "Description": "Launching a new EC2 instance: i-0deade977592562fe",
-    "EndTime": "2021-07-12T12:36:55.181Z",
-    "RequestId": "ca75ea6a-e0ad-3821-1090-b094146567a1",
-    "ActivityId": "ca75ea6a-e0ad-3821-1090-b094146567a1",
-    "StartTime": "2021-07-12T12:36:38.862Z",
-    "EC2InstanceId": "i-0deade977592562fe",
-    "StatusCode": "InProgress",
-    "StatusMessage": "",
-    "Details": {
-      "Subnet ID": "subnet-0f918adea17392848",
-      "Availability Zone": "eu-west-1b"
-    },
-    "Cause": "At 2021-07-12T12:36:36Z an instance was started in response to a difference between desired and actual capacity, increasing the capacity from 3 to 4.",
-    "AutoScalingGroupName": "EC2ContainerService-euwe1-tit-wscl001-Worker-EcsSpotInstanceAsg"
-  }
+  "Origin": "EC2",
+  "Destination": "AutoScalingGroup",
+  "Progress": 50,
+  "AccountId": "464661424927",
+  "Description": "Launching a new EC2 instance: i-0c0a83d70c06a981d",
+  "RequestId": "d395ea6c-5a86-0d3a-ca84-dc6324adcb5d",
+  "EndTime": "2021-07-12T14:20:06.226Z",
+  "AutoScalingGroupARN": "arn:aws:autoscaling:eu-west-1:464661424927:autoScalingGroup:13ce8ccd-d004-4181-bd9d-c0914d9cc145:autoScalingGroupName/EC2ContainerService-euwe1-tit-wscl001-Web-EcsSpotInstanceAsg",
+  "ActivityId": "d395ea6c-5a86-0d3a-ca84-dc6324adcb5d",
+  "StartTime": "2021-07-12T14:19:49.507Z",
+  "Service": "AWS Auto Scaling",
+  "Time": "2021-07-12T14:20:06.226Z",
+  "EC2InstanceId": "i-0c0a83d70c06a981d",
+  "StatusCode": "InProgress",
+  "StatusMessage": "",
+  "Details": {
+    "Subnet ID": "subnet-0e82a36eb7d6bacfc",
+    "Availability Zone": "eu-west-1a"
+  },
+  "AutoScalingGroupName": "EC2ContainerService-euwe1-tit-wscl001-Web-EcsSpotInstanceAsg",
+  "Cause": "At 2021-07-12T14:19:47Z an instance was started in response to a difference between desired and actual capacity, increasing the capacity from 3 to 4.",
+  "Event": "autoscaling:EC2_INSTANCE_LAUNCH"
 }

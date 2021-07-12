@@ -1,27 +1,40 @@
 
 
+def launch_new_ec2_asg(message):
+    return launch_new_ec2(message['detail'])
+
+
 def launch_new_ec2(message):
+    details = message['Details']
     return {
         "@type": "MessageCard",
         "@context": "http://schema.org/extensions",
         "themeColor": "0076D7",
-        "summary": message['detail']['Destination'] + ' - ' + message['detail']['Description'],
+        "summary": message['Destination'] + ' - ' + message['Description'],
         "sections": [{
-            "activityTitle": message['detail']['Destination'] + ' - ' + message['detail']['Description'],
-            "activitySubtitle": message['detail']['Cause'],
+            "activityTitle": message['Destination'] + ' - ' + message['Description'],
+            "activitySubtitle": message['Cause'],
             "activityImage": "https://sinovi.uk/images/articles/cw.png",
             "facts": [
                 {
                     "name": "AutoScalingGroupName:",
-                    "value": message['detail']['AutoScalingGroupName']
+                    "value": message['AutoScalingGroupName']
                 },
                 {
                     "name": "Availability Zone",
-                    "value": message['detail']['Details']['Availability Zone']
+                    "value": details['Availability Zone']
                 },
                 {
                     "name": "Subnet ID",
-                    "value": message['detail']['Details']['Subnet ID']
+                    "value": details['Subnet ID']
+                },
+                {
+                    "name": "StartTime",
+                    "value": message['StartTime']
+                },
+                {
+                    "name": "Status",
+                    "value": message['StatusCode']
                 }
             ],
             "markdown": True

@@ -18,6 +18,7 @@ def lambda_handler(event, context):
     message = json.loads(f.read())
     f.close()
     original_message = message
+    print(original_message)
 
     if 'AlarmName' in message:
         alarm_name = message['AlarmName']
@@ -25,41 +26,15 @@ def lambda_handler(event, context):
         new_state = message['NewStateValue']
         reason = message['NewStateReason']
     elif 'source' in message and message['source'] == 'aws.autoscaling':
-        alarm_name = message['detail']['AutoScalingGroupName']
-        old_state = 'N/A'
-        new_state = message['detail']['Description']
-        reason = message['detail']['Cause']
+        message = ec2.launch_new_ec2_asg(original_message)
+    elif 'Destination' in message and message['Destination'] == 'AutoScalingGroup':
+        message = ec2.launch_new_ec2(original_message)
     else:
         alarm_name = 'Unknown'
         old_state = 'Unknown'
         new_state = 'Unknown'
         reason = message
 
-    data = {
-        "colour": "64a837",
-        "title": "**%s** is resolved" % alarm_name,
-        "text": "**%s** has changed from %s to %s - %s" % (alarm_name, old_state, new_state, reason)
-    }
-
-    if new_state.lower() == 'alarm':
-        data = {
-            "colour": "d63333",
-            "title": "Red Alert - There is an issue %s" % alarm_name,
-            "text": "**%s** has changed from %s to %s - %s" % (alarm_name, old_state, new_state, reason)
-        }
-
-    message = {
-        "@context": "https://schema.org/extensions",
-        "@type": "MessageCard",
-        "themeColor": data["colour"],
-        "title": data["title"],
-        "text": data["text"]
-    }
-
-    f = open('ex.json', "r")
-    message = json.loads(f.read())
-    f.close()
-    message = ec2.launch_new_ec2(original_message)
     req = Request(HOOK_URL, json.dumps(message).encode('utf-8'))
     try:
         response = urlopen(req)
